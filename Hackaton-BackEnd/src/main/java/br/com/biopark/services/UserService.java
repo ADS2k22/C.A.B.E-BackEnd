@@ -65,6 +65,7 @@ public class UserService implements UserDetailsService {
 		entity.setAccountNonLocked(true);
 		entity.setCredentialsNonExpired(true);
 		entity.setEnabled(true);
+		// ENVIO DE EMAIL PARA O USERNAME
 		UserVO persisted = Mapper.parseObject(repository.save(entity), UserVO.class);
 		persisted.add(linkTo(methodOn(UserController.class).findById(persisted.getKey())).withSelfRel());
 		return persisted;

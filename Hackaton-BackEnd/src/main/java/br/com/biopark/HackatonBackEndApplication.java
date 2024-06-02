@@ -9,5 +9,4 @@ public class HackatonBackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HackatonBackEndApplication.class, args);
 	}
-
 }
