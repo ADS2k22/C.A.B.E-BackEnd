@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.biopark.vo.UserVO;
+import br.com.biopark.dtos.PasswordDTO;
 import br.com.biopark.services.UserService;
 import br.com.biopark.util.MediaType;
 import io.swagger.v3.oas.annotations.Operation;
@@ -119,7 +120,7 @@ public class UserController {
 	}
 	
 	@PatchMapping("/{id}/desable")
-	@Operation(summary = "Desativar um administrador", description = "Desativar um administrador pelo seu ID", tags = {"Administradores"},
+	@Operation(summary = "Desativar ou ativar um administrador", description = "Desativar ou ativar um administrador pelo seu ID", tags = {"Administradores"},
 	responses = {
 			@ApiResponse(description = "Success", responseCode = "200", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = UserVO.class)),
@@ -144,8 +145,8 @@ public class UserController {
 			@ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
 			@ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
 	})
-	public void changePassword(@PathVariable(value = "id") Long id, @RequestBody String password){
-		service.changePassword(id, password);
+	public void changePassword(@PathVariable(value = "id") Long id, @RequestBody PasswordDTO password){
+		service.changePassword(id, password.getPassword());
 	}
 	
 	@GetMapping(value = "/username/{username}",

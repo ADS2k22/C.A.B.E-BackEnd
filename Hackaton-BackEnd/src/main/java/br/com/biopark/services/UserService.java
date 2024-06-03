@@ -20,11 +20,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.biopark.controllers.UserController;
-import br.com.biopark.vo.UserVO;
 import br.com.biopark.exceptions.MinhaException;
 import br.com.biopark.mapper.Mapper;
 import br.com.biopark.models.User;
 import br.com.biopark.repositories.UserRepository;
+import br.com.biopark.vo.UserVO;
 
 @Service
 public class UserService implements UserDetailsService {
