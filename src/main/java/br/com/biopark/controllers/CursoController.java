@@ -44,7 +44,7 @@ public class CursoController {
 	}
 	
 	@GetMapping(value = "/videos", produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
-	public List<Video_User_RelacaoVO> findAllByCursoId(@RequestParam(value = "cursoid") Long cursoid, @RequestParam(value = "userid") Long userid){
-		return service.findAllByCursoId(cursoid, userid);
+	public List<Video_User_RelacaoVO> findAllByCursoId(@RequestParam(value = "cursoid") Long cursoid, @RequestParam(value = "idUser", defaultValue = "1") Long idUser){
+		return service.findAllByCursoId(cursoid, idUser);
 	}
 }
