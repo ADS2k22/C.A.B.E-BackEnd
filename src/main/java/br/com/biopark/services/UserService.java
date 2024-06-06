@@ -23,7 +23,11 @@ import br.com.biopark.controllers.UserController;
 import br.com.biopark.exceptions.MinhaException;
 import br.com.biopark.mapper.Mapper;
 import br.com.biopark.models.User;
+import br.com.biopark.models.Video;
+import br.com.biopark.models.Video_User_Relacao;
 import br.com.biopark.repositories.UserRepository;
+import br.com.biopark.repositories.VideoRepository;
+import br.com.biopark.repositories.Video_User_RelacaoRepository;
 import br.com.biopark.vo.UserVO;
 
 @Service
@@ -31,6 +35,10 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	UserRepository repository;
+	@Autowired
+	VideoRepository videoRepository;
+	@Autowired
+	Video_User_RelacaoRepository vurRepository;
 	@Autowired
 	EmailService emailService;
 
@@ -71,6 +79,14 @@ public class UserService implements UserDetailsService {
 				+ " Esperamos que os cursos sejam eficientes ao seu aprendizado. Aproveite!");
 		UserVO persisted = Mapper.parseObject(repository.save(entity), UserVO.class);
 		persisted.add(linkTo(methodOn(UserController.class).findById(persisted.getKey())).withSelfRel());
+		List<Video> videos = videoRepository.findAll();
+		for (Video video : videos) {
+			Video_User_Relacao vur = new Video_User_Relacao();
+			vur.setUser(Mapper.parseObject(persisted, User.class));
+			vur.setVideo(video);
+			vur.setConcluido(false);
+			vurRepository.save(vur);
+		}
 		return persisted;
 	}
 	

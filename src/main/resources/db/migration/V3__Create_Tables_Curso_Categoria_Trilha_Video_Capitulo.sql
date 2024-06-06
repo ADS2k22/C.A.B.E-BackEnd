@@ -27,6 +27,6 @@ CREATE TABLE `video`(
     `posicao` INT NOT NULL,
     `curso_id` BIGINT NOT NULL,
     PRIMARY KEY (`id`),
-    UNIQUE KEY `UK_capitulo_id` (`curso_id`),
-    CONSTRAINT `FK_capitulo_video` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id`)
+	KEY `K_curso_id` (`curso_id`),
+    CONSTRAINT `K_curso_id` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id`)
 );
