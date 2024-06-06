@@ -167,4 +167,10 @@ public class UserController {
 	public UserVO findByUsername(@PathVariable(value = "username") String username) {
 		return service.findByUsername(username);
 	}
+	
+	@PatchMapping(value = "/updateUser/{id}",
+			produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
+	public UserVO updateUser(@PathVariable(value = "id") Long userId) {
+		return service.updateUser(userId);
+	}
 }
