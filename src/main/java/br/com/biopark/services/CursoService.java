@@ -42,8 +42,8 @@ public class CursoService {
 			List<Long> videos = videoRepository.findAllByCurso(curso.getKey());
 			List<Boolean> conclusoes = new ArrayList<>();
 			for (Long video : videos) {
-				boolean conc = vurRepository.findByUserAndVideo(video, userId);
-				System.out.println(conc);
+				Video_User_Relacao vur = vurRepository.findByUserAndVideo(video, userId);
+				boolean conc = vur.isConcluido();
 				conclusoes.add(conc);
 			}
 			for (Boolean concc : conclusoes) {
@@ -80,8 +80,8 @@ public class CursoService {
 			List<Long> videos = videoRepository.findAllByCurso(curso.getKey());
 			List<Boolean> conclusoes = new ArrayList<>();
 			for (Long video : videos) {
-				boolean conc = vurRepository.findByUserAndVideo(video, userId);
-				System.out.println(conc);
+				Video_User_Relacao vur = vurRepository.findByUserAndVideo(video, userId);
+				boolean conc = vur.isConcluido();
 				conclusoes.add(conc);
 			}
 			for (Boolean concc : conclusoes) {
