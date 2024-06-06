@@ -14,6 +14,7 @@ import br.com.biopark.repositories.CustomRepository;
 import br.com.biopark.repositories.VideoRepository;
 import br.com.biopark.repositories.Video_User_RelacaoRepository;
 import br.com.biopark.vo.CursoVO;
+import br.com.biopark.vo.Video_User_RelacaoVO;
 
 @Service
 public class CursoService {
@@ -26,6 +27,8 @@ public class CursoService {
 	Video_User_RelacaoRepository vurRepository;
 	@Autowired
 	CustomRepository customRepository;
+	@Autowired
+	Video_User_RelacaoService vurService;
 	
 	public List<CursoConclusaoDTO> findAll(Long userId){
 		List<CursoVO> cursos = Mapper.parseListObjects(repository.findAll(), CursoVO.class);
@@ -110,5 +113,9 @@ public class CursoService {
 			lista.add(dto);
 		}
 		return lista;
+	}
+	
+	public List<Video_User_RelacaoVO> findAllByCursoId(Long cursoId, Long adminId){
+		return vurService.findAllByCursoId(cursoId, adminId);
 	}
 }

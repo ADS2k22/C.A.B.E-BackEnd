@@ -12,6 +12,7 @@ import br.com.biopark.dtos.CursoConclusaoDTO;
 import br.com.biopark.dtos.FiltrosCursoDTO;
 import br.com.biopark.services.CursoService;
 import br.com.biopark.util.MediaType;
+import br.com.biopark.vo.Video_User_RelacaoVO;
 
 @RestController
 @RequestMapping("/api/curso")
@@ -40,5 +41,10 @@ public class CursoController {
 	public List<CursoConclusaoDTO> findAllByRoadMap(@RequestParam(value = "roadmap") String roadmap,
 	        @RequestParam(value = "idUser", defaultValue = "1") Long idUser) {
 	    return service.findByRoadMap(roadmap, idUser);
+	}
+	
+	@GetMapping(value = "/videos", produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
+	public List<Video_User_RelacaoVO> findAllByCursoId(@RequestParam(value = "cursoid") Long cursoid, @RequestParam(value = "userid") Long userid){
+		return service.findAllByCursoId(cursoid, userid);
 	}
 }
