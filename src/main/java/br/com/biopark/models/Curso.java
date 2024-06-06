@@ -30,7 +30,10 @@ public class Curso {
 	private String trilha;
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	private Categoria cagetoria;
+	private Categoria categoria;
+	
+	@Column(nullable = false)
+	private int feedback;
 
 	public Long getId() {
 		return id;
@@ -56,17 +59,33 @@ public class Curso {
 		this.carga_horaria = carga_horaria;
 	}
 
-	public Categoria getCagetoria() {
-		return cagetoria;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setCagetoria(Categoria cagetoria) {
-		this.cagetoria = cagetoria;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public String getTrilha() {
+		return trilha;
+	}
+
+	public void setTrilha(String trilha) {
+		this.trilha = trilha;
+	}
+
+	public int getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(int feedback) {
+		this.feedback = feedback;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cagetoria, carga_horaria, id, nome);
+		return Objects.hash(categoria, carga_horaria, id, nome);
 	}
 
 	@Override
@@ -78,7 +97,18 @@ public class Curso {
 		if (getClass() != obj.getClass())
 			return false;
 		Curso other = (Curso) obj;
-		return Objects.equals(cagetoria, other.cagetoria) && carga_horaria == other.carga_horaria
+		return Objects.equals(categoria, other.categoria) && carga_horaria == other.carga_horaria
 				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome);
 	}
+	
+	public Curso(Long id, String nome, Integer carga_horaria, String trilha, Categoria categoria, Integer feedback) {
+		this.id = id;
+		this.nome = nome;
+		this.carga_horaria = carga_horaria;
+		this.trilha = trilha;
+		this.feedback = feedback;
+		this.categoria = categoria;
+	}
+	
+	public Curso() {}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.biopark.dtos.CursoConclusaoDTO;
 import br.com.biopark.dtos.FiltrosCursoDTO;
 import br.com.biopark.mapper.Mapper;
 import br.com.biopark.repositories.CursoRepository;
@@ -20,16 +21,21 @@ public class CursoService {
 	@Autowired
 	CustomRepository customRepository;
 	
-	public List<CursoVO> findAll(int page){
-		int number = page * 10;
-		List<CursoVO> cursos = Mapper.parseListObjects(repository.findAllPaged(number), CursoVO.class);
-		return cursos;
+	public List<CursoConclusaoDTO> findAll(){
+		List<CursoVO> cursos = Mapper.parseListObjects(repository.findAll(), CursoVO.class);
+		List<CursoConclusaoDTO> lista = new ArrayList<>();
+		for (CursoVO curso : cursos) {
+			CursoConclusaoDTO dto = new CursoConclusaoDTO();
+			dto.setCurso(curso);
+			// AQUI FEITO A VERIFICAÇÃO, MAS POR ENQUANTO TUDO NÃO
+			dto.setConcluido(false);
+		}
+		return lista;
 	}
 	
-	public List<CursoVO> findWithFiltragens(FiltrosCursoDTO filtros, int page){
+	public List<CursoConclusaoDTO> findWithFiltragens(FiltrosCursoDTO filtros){
 		List<String> conditions = new ArrayList<>();
-		String query = "SELECT c.id, c.nome, c.carga_horaria, c.categoria FROM Conta AS c ";
-		int number = page * 10;
+		String query = "SELECT c.id, c.nome, c.carga_horaria, c.trilha, c.categoria, c.feedback FROM Curso AS c ";
 		
 		if (filtros.getNome() != null) {
 			conditions.add("c.nome LIKE '%" + filtros.getNome() + "%'");
@@ -44,8 +50,14 @@ public class CursoService {
 		if (conditions.size() != 0) {
 			query = query + " WHERE " +  String.join(" ", conditions);
 		}
-		query = query + " GROUP BY (c) ORDER BY c.id ASC LIMIT 10 OFFSET " + number;
 		List<CursoVO> cursos = Mapper.parseListObjects(customRepository.findWithFiltros(query), CursoVO.class);
-		return cursos;
+		List<CursoConclusaoDTO> lista = new ArrayList<>();
+		for (CursoVO curso : cursos) {
+			CursoConclusaoDTO dto = new CursoConclusaoDTO();
+			dto.setCurso(curso);
+			// AQUI FEITO A VERIFICAÇÃO, MAS POR ENQUANTO TUDO NÃO
+			dto.setConcluido(false);
+		}
+		return lista;
 	}
 }

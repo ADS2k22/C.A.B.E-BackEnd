@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import br.com.biopark.models.Categoria;
 
-@JsonPropertyOrder({"id", "nome", "carga_horaria", "categoria"})
+@JsonPropertyOrder({"id", "nome", "carga_horaria", "categoria", "trilha", "feedback"})
 public class CursoVO extends RepresentationModel<CursoVO> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -19,8 +19,10 @@ public class CursoVO extends RepresentationModel<CursoVO> implements Serializabl
 	private Long key;
 	private String nome;
 	private int carga_horaria;
-	private Categoria cagetoria;
-
+	private Categoria categoria;
+	private String trilha;
+	private int feedback;
+	
 	public Long getKey() {
 		return key;
 	}
@@ -45,29 +47,49 @@ public class CursoVO extends RepresentationModel<CursoVO> implements Serializabl
 		this.carga_horaria = carga_horaria;
 	}
 
-	public Categoria getCagetoria() {
-		return cagetoria;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setCagetoria(Categoria cagetoria) {
-		this.cagetoria = cagetoria;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public String getTrilha() {
+		return trilha;
+	}
+
+	public void setTrilha(String trilha) {
+		this.trilha = trilha;
+	}
+
+	public int getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(int feedback) {
+		this.feedback = feedback;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cagetoria, carga_horaria, key, nome);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(carga_horaria, categoria, feedback, key, nome, trilha);
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		CursoVO other = (CursoVO) obj;
-		return Objects.equals(cagetoria, other.cagetoria) && carga_horaria == other.carga_horaria
-				&& Objects.equals(key, other.key) && Objects.equals(nome, other.nome);
+		return carga_horaria == other.carga_horaria && Objects.equals(categoria, other.categoria)
+				&& feedback == other.feedback && Objects.equals(key, other.key) && Objects.equals(nome, other.nome)
+				&& Objects.equals(trilha, other.trilha);
 	}
 }
