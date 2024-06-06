@@ -31,9 +31,7 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	UserRepository repository;
-	@Autowired
-	EmailService emailService;
-	
+
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public List<UserVO> findAll(Integer page){
 		int number = 10 * page;
@@ -67,8 +65,7 @@ public class UserService implements UserDetailsService {
 		entity.setAccountNonLocked(true);
 		entity.setCredentialsNonExpired(true);
 		entity.setEnabled(true);
-		emailService.sendSimpleMessage(admin.getUsername(), "Usuário criado com sucesso!", "Bem-vindo " + admin.getNome() + "! Você foi cadastrado com sucesso ao CABE (Centro de Aprendizados do Biopark Educação)!"
-				+ " Esperamos que os cursos sejam eficientes ao seu aprendizado. Aproveite!");
+		// ENVIO DE EMAIL PARA O USERNAME
 		UserVO persisted = Mapper.parseObject(repository.save(entity), UserVO.class);
 		persisted.add(linkTo(methodOn(UserController.class).findById(persisted.getKey())).withSelfRel());
 		return persisted;
