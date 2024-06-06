@@ -10,8 +10,8 @@ import br.com.biopark.models.Video_User_Relacao;
 
 public interface Video_User_RelacaoRepository extends JpaRepository<Video_User_Relacao, Long> {
 	
-	@Query(nativeQuery = true, value = "SELECT concluido FROM video_user_relacao WHERE video_id = :videoid AND user_id = :userid")
-	public boolean findByUserAndVideo(@Param(value = "videoid") Long videoid, @Param(value = "userid") Long userid);
+	@Query(nativeQuery = true, value = "SELECT * FROM video_user_relacao WHERE video_id = :videoid AND user_id = :userid")
+	public Video_User_Relacao findByUserAndVideo(@Param(value = "videoid") Long videoid, @Param(value = "userid") Long userid);
 	
 	@Query(nativeQuery = true, value = "SELECT vur.id, vur.concluido, vur.video_id, vur.user_id FROM Video_User_Relacao AS vur "
 			+ "JOIN video AS v ON vur.video_id = v.id "

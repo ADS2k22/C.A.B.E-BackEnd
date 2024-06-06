@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.biopark.dtos.CursoConclusaoDTO;
 import br.com.biopark.dtos.FiltrosCursoDTO;
 import br.com.biopark.mapper.Mapper;
+import br.com.biopark.models.Video_User_Relacao;
 import br.com.biopark.repositories.CursoRepository;
 import br.com.biopark.repositories.CustomRepository;
 import br.com.biopark.repositories.VideoRepository;
@@ -102,8 +103,8 @@ public class CursoService {
 			List<Long> videos = videoRepository.findAllByCurso(curso.getKey());
 			List<Boolean> conclusoes = new ArrayList<>();
 			for (Long video : videos) {
-				boolean conc = vurRepository.findByUserAndVideo(video, userId);
-				System.out.println(conc);
+				Video_User_Relacao vur = vurRepository.findByUserAndVideo(video, userId);
+				boolean conc = vur.isConcluido();
 				conclusoes.add(conc);
 			}
 			for (Boolean concc : conclusoes) {
@@ -117,5 +118,15 @@ public class CursoService {
 	
 	public List<Video_User_RelacaoVO> findAllByCursoId(Long cursoId, Long adminId){
 		return vurService.findAllByCursoId(cursoId, adminId);
+	}
+	
+	public Video_User_RelacaoVO marcarVideo(Long idVideo, Long idUser) {
+		Video_User_Relacao vur = vurRepository.findByUserAndVideo(idVideo, idUser);
+		if(vur.isConcluido()) {
+			vur.setConcluido(false);
+		} else {
+			vur.setConcluido(true);
+		}
+		return Mapper.parseObject(vurRepository.save(vur), Video_User_RelacaoVO.class);
 	}
 }

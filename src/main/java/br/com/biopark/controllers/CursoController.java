@@ -50,7 +50,7 @@ public class CursoController {
 	}
 	
 	@PatchMapping(value = "/video")
-	public void marcarVideo(@RequestParam(value = "idvideo") Long idvideo, @RequestParam(value = "iduser", defaultValue = "1") Long iduser) {
-		service.marcarVideo(idvideo, iduser);
+	public Video_User_RelacaoVO marcarVideo(@RequestParam(value = "idvideo") Long idvideo, @RequestParam(value = "iduser", defaultValue = "1") Long iduser) {
+		return service.marcarVideo(idvideo, iduser);
 	}
 }
