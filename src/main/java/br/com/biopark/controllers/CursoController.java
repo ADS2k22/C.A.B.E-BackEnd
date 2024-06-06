@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,5 +47,10 @@ public class CursoController {
 	@GetMapping(value = "/videos", produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
 	public List<Video_User_RelacaoVO> findAllByCursoId(@RequestParam(value = "cursoid") Long cursoid, @RequestParam(value = "idUser", defaultValue = "1") Long idUser){
 		return service.findAllByCursoId(cursoid, idUser);
+	}
+	
+	@PatchMapping(value = "/video")
+	public void marcarVideo(@RequestParam(value = "idvideo") Long idvideo, @RequestParam(value = "iduser", defaultValue = "1") Long iduser) {
+		service.marcarVideo(idvideo, iduser);
 	}
 }

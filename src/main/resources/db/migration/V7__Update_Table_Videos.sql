@@ -1,0 +1,15 @@
+UPDATE `video` SET `url` = 'KTJzo-txYVI' WHERE id = 40;
+UPDATE `video` SET `url` = 'cbN4BMm4dz8' WHERE id = 41;
+UPDATE `video` SET `url` = 'ZTFRLE7e28g' WHERE id = 42;
+UPDATE `video` SET `url` = 'zdvVpdjgVts' WHERE id = 43;
+UPDATE `video` SET `url` = 'GWV7pL1iUvc' WHERE id = 44;
+UPDATE `video` SET `url` = '3LgVvsmOvoo' WHERE id = 45;
+UPDATE `video` SET `url` = 'w3pjlAbgIQE' WHERE id = 46;
+UPDATE `video` SET `url` = 'JspuVS_7F0o' WHERE id = 47;
+UPDATE `video` SET `url` = 'wOaXujwtbVQ' WHERE id = 48;
+UPDATE `video` SET `url` = '1TqHoZL3DsY' WHERE id = 49;
+UPDATE `video` SET `url` = 'SNZ3skJ_pfw' WHERE id = 50;
+UPDATE `video` SET `url` = 'ehKD4KAmeY0' WHERE id = 51;
+UPDATE `video` SET `url` = 'RhKcJnZ8lXA' WHERE id = 52;
+UPDATE `video` SET `url` = 'h-IkO_ma7uQ' WHERE id = 53;
+UPDATE `video` SET `url` = 'gmfQCOHeXeE' WHERE id = 54;
