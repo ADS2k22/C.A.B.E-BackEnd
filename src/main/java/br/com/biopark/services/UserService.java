@@ -29,6 +29,7 @@ import br.com.biopark.repositories.UserRepository;
 import br.com.biopark.repositories.VideoRepository;
 import br.com.biopark.repositories.Video_User_RelacaoRepository;
 import br.com.biopark.vo.UserVO;
+import jakarta.mail.MessagingException;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -75,8 +76,15 @@ public class UserService implements UserDetailsService {
 		entity.setAccountNonLocked(true);
 		entity.setCredentialsNonExpired(true);
 		entity.setEnabled(true);
-		emailService.sendSimpleMessage(admin.getUsername(), "Usuário criado com sucesso!", "Bem-vindo " + admin.getNome() + "! Você foi cadastrado com sucesso ao CABE (Centro de Aprendizados do Biopark Educação)!"
-				+ " Esperamos que os cursos sejam eficientes ao seu aprendizado. Aproveite!");
+		String to = admin.getUsername();
+		String subject = "Bem vindo ao Centro de Aprendizagem Biopark Educação(C.A.B.E)";
+		String htmlbody = "<tbody><tr><td width=\"8\" style=\"width:8px\"></td><td><div style=\"border-style:solid;border-width:thin;border-color:#dadce0;border-radius:8px;padding:40px 20px\" align=\"center\" class=\"m_-7537276007738394286mdv2rw\"><img src=\"https://lh3.googleusercontent.com/pw/AP1GczMuXXz3SfopFvDEzhavhgdmRmvdpmYVmPZVaRe-LmdTdbIPcuhf2qjQ3-TBMMquqUUJJ7YNkxbvJSGbDMVyAj9K04khezGD9mEM_IwPKmlxFkkp11ctLGhJLPwHzCeZ0562iN3RaIU7sDQMWs8a3HbgYSfCoSFM-7STQsNdYQGcT52FnTi-AihER8J7Z-vyYR2W-8glQx16lv5z5pJFrTqxmcxYSv33JePQGRHz51qzI-K3BbnUxvEj3joSWHHcydFssQ_79X_3GEUFPq1DrBRDumwNiUCZ9ImOco9PenfYQaIvA3vKCcDcDdkXtaB4LOeO9C5y8G4b61HN1eF0bul_ZgJafKa8hTVSmCaK2Y4QEf0tcxh3yrviU5UTYFXoiVBsNlilrOfAdJL0GYR6Bv1uixYIkePRRVbe7TMpE--sFpGmXSX3UUD-DmIwq5VOpS3qJGWSwm0nrcuiD2OwihJmdye_gx9PacIGP70wdO2I7b_a6tp5ev3XtrbWSsXpX1x0H3G_eDLTcHTzYJmNKGuqtQH7r-uuhxOEqHGUA0X1OergmoUVGEZ8eHluwe-FdZWBLqoBSv_qSdDRf_kLoEgI7NIDH6lzTRtnHsiwdSpfg5PwN7McS4U2sYGAC8Qef75eI1rrjWTdfGHymaVtZYH8qUkMZnao42Kz-LxrbvUwUKlN89KIdX7d-2b8b-WJJm1usMzaBvkGqeVZ0WG_ShvcOqIppsnUxnVHMyht4kEY12A3XAbMKy5tKrqrlHDJBUEUEk8-lLQxGLYVX7mut0TswOj2pNYECKFIdW4FCsP9y8hgON6PuV0dsoOfWtq3fTrP0ERWqR8xLqdBuN16G3Pe0OxZxF94xR64-Fx3t-ZBbulpdOvTFc_mYzoR3aw2TD_pN6up0vs71Yi6qZd_bJ6pOQ=w992-h945-s-no-gm?authuser=0\" width=\"128\" height=\"128\" aria-hidden=\"true\" style=\"margin-bottom:16px\" alt=\"Google\" class=\"CToWUd\" data-bit=\"iit\" jslog=\"138226; u014N:xr6bB; 53:WzAsMl0.\"><div style=\"font-family:'Google Sans',Roboto,RobotoDraft,Helvetica,Arial,sans-serif;border-bottom:thin solid #dadce0;color:rgba(0,0,0,0.87);line-height:32px;padding-bottom:24px;text-align:center;word-break:break-word\"><div style=\"font-size:24px\">Bem vindo ao Centro de Aprendizagem Biopark Educação(C.A.B.E)</div> </div><div style=\"font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:14px;color:rgba(0,0,0,0.87);line-height:20px;padding-top:20px;text-align:center\">Esperamos que nossos cursos enriqueçam o seu aprendizado e lhe ajudem a trilhar um caminho de conhecimento. Aproveite!\r\n"
+				+ "</div></div></td><td width=\"8\" style=\"width:8px\"></td></tr></tbody>";
+		try {
+            emailService.sendHtmlMessage(to, subject, htmlbody);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }	
 		UserVO persisted = Mapper.parseObject(repository.save(entity), UserVO.class);
 		persisted.add(linkTo(methodOn(UserController.class).findById(persisted.getKey())).withSelfRel());
 		List<Video> videos = videoRepository.findAll();
