@@ -1,4 +1,10 @@
+FROM maven:3.8.4-openjdk-17-slim AS build
+WORKDIR /app
+COPY . /app/
+RUN mvn clean package -DskipTests=true
+
 FROM openjdk:17-jdk-slim
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar", "/app.jar"]
+WORKDIR /app
+COPY --from=build /app/target/*.jar /app/app.jar
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

@@ -4,6 +4,7 @@ services:
     image: mysql:8.0.35
     command: mysqld --default-authentication-plugin=mysql_native_password
     restart: always
+    container_name: db
     environment:
       TZ: America/Sao_Paulo
       MYSQL_ROOT_PASSWORD: admin123
@@ -19,8 +20,9 @@ services:
       - hackaton-network
   hackaton:
     restart: always
-    build: ./Hackaton-BackEnd
-    working_dir: /Hackaton-BackEnd
+    build: .
+    working_dir: .
+    container_name: app
     environment:
       TZ: America/Sao_Paulo
       SPRING.DATASOURCE.URL: jdbc:mysql://db:3306/hackaton?useTimezone=true&serverTimezone=UTC
